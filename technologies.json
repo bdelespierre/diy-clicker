@@ -1,0 +1,53 @@
+{
+    "energy-matrix": {
+        "id": "tech-energy-matrix",
+        "label": "Energy Matrix",
+        "requirements": [],
+        "effects": [
+            ["energy-generator", "incProductionMultiplier", 1]
+        ],
+        "upgrade": {
+            "item-energy": 5
+        },
+        "parameters": {
+            "costBase": 4,
+            "growthRate": 1.07,
+            "upgradeTime": 2e3
+        }
+    },
+    "hydrogen-resonance": {
+        "id": "tech-hydrogen-resonance",
+        "label": "Hydrogen Resonance",
+        "requirements": [
+            ["hydrogen-generator", "unlocked"],
+            ["item-hydrogen", 10]
+        ],
+        "effects": [
+            ["hydrogen-generator", "incProductionMultiplier", 1]
+        ],
+        "upgrade": {
+            "item-hydrogen": 10
+        },
+        "parameters": {
+            "costBase": 4,
+            "growthRate": 1.07,
+            "upgradeTime": 10e3
+        }
+    },
+    "tech-stellar-nucleosynthesis": {
+        "id": "tech-stellar-nucleosynthesis",
+        "label": "Stellar Nucleosynthesis",
+        "requirements": [
+            ["item-hydrogen", 1e5]
+        ],
+        "effects": [],
+        "upgrade": {
+            "item-hydrogen": 10
+        },
+        "parameters": {
+            "costBase": 4,
+            "growthRate": 1.07,
+            "upgradeTime": 60e3
+        }
+    }
+}

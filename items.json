@@ -1,0 +1,59 @@
+{
+    "entropy": {
+        "id": "item-entropy",
+        "label": "Entropy",
+        "description": "The measurement of disorder in your universe."
+    },
+    "energy": {
+        "id": "item-energy",
+        "label": "Energy",
+        "description": "The capacity for doing work."
+    },
+    "hydrogen": {
+        "id": "item-hydrogen",
+        "label": "Hydrogen",
+        "description": "One proton, one electron, that's all you need!"
+    },
+    "star": {
+        "id": "item-star",
+        "label": "Star",
+        "description": "A bright sphere that can fuse chemical elements"
+    },
+    "supernova": {
+        "id": "item-supernova",
+        "label": "Supernova",
+        "description": "An exploding star, used to harvest those gnarly space ingredients"
+    },
+    "oxygen": {
+        "id": "item-oxygen",
+        "label": "Oxygen"
+    },
+    "carbon": {
+        "id": "item-carbon",
+        "label": "Carbon"
+    },
+    "neon": {
+        "id": "item-neon",
+        "label": "Neon"
+    },
+    "nitrogen": {
+        "id": "item-nitrogen",
+        "label": "Nitrogen"
+    },
+    "magnesium": {
+        "id": "item-magnesium",
+        "label": "Magnesium"
+    },
+    "silicon": {
+        "id": "item-silicon",
+        "label": "Silicon"
+    },
+    "iron": {
+        "id": "item-iron",
+        "label": "Iron"
+    },
+    "sulfur": {
+        "id": "item-sulfur",
+        "label": "Sulfur"
+    }
+}

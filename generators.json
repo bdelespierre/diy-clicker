@@ -1,0 +1,104 @@
+{
+    "energy-generator": {
+        "id": "energy-generator",
+        "label": "Cosmic Engine",
+        "description": "Provdes energy to your universe",
+        "requirements": [],
+        "input": {},
+        "output": {
+            "item-entropy": 1,
+            "item-energy": 1
+        },
+        "upgrade": {
+            "item-energy": 1
+        },
+        "parameters": {
+            "costBase": 4,
+            "growthRate": 1.07,
+            "productionTime": 200
+        }
+    },
+    "hydrogen-generator": {
+        "id": "hydrogen-generator",
+        "label": "Hydrogen Generator",
+        "description": "Creates hydrogen out of pure energy, a miracle of science!",
+        "requirements": [
+            ["item-energy", 1e2],
+            ["energy-generator", "levelGte", 5]
+        ],
+        "input": {
+            "item-energy": 5
+        },
+        "output": {
+            "item-entropy": 5,
+            "item-hydrogen": 1
+        },
+        "upgrade": {
+            "item-energy": 2,
+            "item-hydrogen": 1
+        },
+        "parameters": {
+            "costBase": 48,
+            "growthRate": 1.15,
+            "productionTime": 500
+        }
+    },
+    "star-generator": {
+        "id": "star-generator",
+        "label": "Hydrogen Gas Collapser",
+        "description": "Collapses huge clouds of hydrogen gas into a star.",
+        "requirements": [
+            ["item-hydrogen", 1e5],
+            ["tech-stellar-nucleosynthesis", "unlocked"]
+        ],
+        "input": {
+            "item-energy": 5e3,
+            "item-hydrogen": 1e4
+        },
+        "output": {
+            "item-entropy": 50e3,
+            "item-star": 1
+        },
+        "upgrade": {
+            "item-energy": 2e2,
+            "item-hydrogen": 1e2
+        },
+        "parameters": {
+            "costBase": 576,
+            "growthRate": 1.14,
+            "productionTime": 10e3
+        }
+    },
+    "supernova-generator": {
+        "id": "supernova-generator",
+        "label": "Star Bomb",
+        "description": "Forces a star to explode to release its chemical elements. Kaboomboom.",
+        "requirements": [
+            ["item-star", 5]
+        ],
+        "input": {
+            "item-energy": 1e6,
+            "item-star": 1
+        },
+        "output": {
+            "item-entropy": 1e6,
+            "item-oxygen": 47,
+            "item-carbon": 26,
+            "item-neon": 8,
+            "item-nitrogen": 7,
+            "item-magnesium": 3,
+            "item-silicon": 3,
+            "item-iron": 3,
+            "item-sulfur": 3
+        },
+        "upgrade": {
+            "item-energy": 3.5e4,
+            "item-hydrogen": 6.5e5
+        },
+        "parameters": {
+            "costBase": 6912,
+            "growthRate": 1.13,
+            "productionTime": 30e3
+        }
+    }
+}
