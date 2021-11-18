@@ -1,18 +1,18 @@
-import Assertion from '/js/lib/Assertion.js';
-import Identity from '/js/app/Identity.js';
+import Assertion from '../lib/Assertion.js'
+import Identity from './Identity.js'
 
 export default class Item {
     #identity;
 
-    constructor({
-        identity
+    constructor ({
+      identity
     }) {
-        Assertion.instanceOf(identity, Identity);
+      Assertion.instanceOf(identity, Identity)
 
-        this.#identity = identity;
+      this.#identity = identity
     }
 
-    get identity() {
-        return this.#identity;
+    get identity () {
+      return this.#identity
     }
 }

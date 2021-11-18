@@ -1,50 +1,50 @@
-import Assertion from '/js/lib/Assertion.js';
-import Item from '/js/app/Item.js';
+import Assertion from '../lib/Assertion.js'
+import Item from './Item.js'
 
 export default class ItemBag {
     #map;
 
-    constructor(items) {
-        this.#map = new Map(items);
+    constructor (items) {
+      this.#map = new Map(items)
     }
 
-    set(item, qt) {
-        Assertion.instanceOf(item, Item);
-        Assertion.positiveNumber(qt);
+    set (item, qt) {
+      Assertion.instanceOf(item, Item)
+      Assertion.positiveNumber(qt)
 
-        this.#map.set(item, qt);
-        return this;
+      this.#map.set(item, qt)
+      return this
     }
 
-    has(item) {
-        return this.#map.has(item);
+    has (item) {
+      return this.#map.has(item)
     }
 
-    get(item) {
-        return this.#map.get(item) || 0;
+    get (item) {
+      return this.#map.get(item) || 0
     }
 
-    entries() {
-        return this.#map.entries();
+    entries () {
+      return this.#map.entries()
     }
 
-    every(fn) {
-        for (const [item, qt] of this.entries()) {
-            if (! fn(item, qt)) {
-                return false;
-            }
+    every (fn) {
+      for (const [item, qt] of this.entries()) {
+        if (!fn(item, qt)) {
+          return false
         }
+      }
 
-        return true;
+      return true
     }
 
-    map(fn) {
-        const result = [];
+    map (fn) {
+      const result = []
 
-        for (const [item, qt] of this.entries()) {
-            result.push(fn(item, qt));
-        }
+      for (const [item, qt] of this.entries()) {
+        result.push(fn(item, qt))
+      }
 
-        return result;
+      return result
     }
 }

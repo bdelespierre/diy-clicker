@@ -1,61 +1,51 @@
 export default class Dispatcher {
-    emit(event, details) {
-        if (this.#events[event] == undefined) {
-            return this;
-        }
+  #events = {};
 
-        this.#events[event].forEach(listener => {
-            listener.call(this, details);
-        });
-
-        return this;
+  emit (event, details) {
+    if (this.#events[event] === undefined) {
+      return this
     }
 
-    // ------------------------------------------------------------------------
-    // Bindings
+    this.#events[event].forEach(listener => {
+      listener.call(this, details)
+    })
 
-    on(event, callback) {
-        if (! (callback instanceof Function)) {
-            throw "not a Function instance";
-        }
+    return this
+  }
 
-        if (this.#events[event] == undefined) {
-            this.#events[event] = [];
-        }
-
-        this.#events[event].push(callback);
-        return this;
+  on (event, callback) {
+    if (!(callback instanceof Function)) {
+      throw new Error('not a Function instance')
     }
 
-    off(event, callback) {
-        if (this.#events[event] == undefined) {
-            return this;
-        }
-
-        let offset = this.#events[event].indexOf(callback);
-
-        if (offset !== -1) {
-            this.#events[event].splice(offset, 1);
-        }
-
-        return this;
+    if (this.#events[event] === undefined) {
+      this.#events[event] = []
     }
 
-    once(event, callback) {
-        this.on(event, function(details) {
-            callback.call(this, details);
-            this.off(event, callback);
-        });
+    this.#events[event].push(callback)
+    return this
+  }
 
-        return this;
+  off (event, callback) {
+    if (this.#events[event] === undefined) {
+      return this
     }
 
-    // ------------------------------------------------------------------------
-    // Registered events
+    const offset = this.#events[event].indexOf(callback)
 
-    #events = {};
-
-    getEvents() {
-        return this.#events;
+    if (offset !== -1) {
+      this.#events[event].splice(offset, 1)
     }
+
+    return this
+  }
+
+  once (event, callback) {
+    this.on(event, function (details) {
+      callback.call(this, details)
+      this.off(event, callback)
+    })
+
+    return this
+  }
 }

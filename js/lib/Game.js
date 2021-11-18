@@ -1,67 +1,67 @@
-import Config from '/js/lib/Config.js';
-import Dispatcher from '/js/lib/Dispatcher.js';
-import Keyboard from '/js/lib/Keyboard.js';
-import State from '/js/lib/State.js';
+import Config from './Config.js'
+import Dispatcher from './Dispatcher.js'
+import Keyboard from './Keyboard.js'
+import State from './State.js'
 
 export default class Game {
-    constructor({
-        config = new Config(),
-        dispatcher = new Dispatcher(),
-        keyboard = new Keyboard(),
-        state,
-    } = {}) {
-        this.setConfig(config)
-            .setDispatcher(dispatcher)
-            .setKeyboard(keyboard)
-            .setState(state || new State(this));
-    }
+  constructor ({
+    config = new Config(),
+    dispatcher = new Dispatcher(),
+    keyboard = new Keyboard(),
+    state
+  } = {}) {
+    this.setConfig(config)
+      .setDispatcher(dispatcher)
+      .setKeyboard(keyboard)
+      .setState(state || new State(this))
+  }
 
-    run() {
-        // setup the mainloop
-        MainLoop.setBegin(this.begin.bind(this))
-            .setUpdate(this.update.bind(this))
-            .setDraw(this.draw.bind(this))
-            .setEnd(this.end.bind(this))
-            .start();
+  run () {
+    // setup the mainloop
+    window.MainLoop.setBegin(this.begin.bind(this))
+      .setUpdate(this.update.bind(this))
+      .setDraw(this.draw.bind(this))
+      .setEnd(this.end.bind(this))
+      .start()
 
-        return this;
-    }
+    return this
+  }
 
-    // ------------------------------------------------------------------------
-    // Mainloop callbacks
+  // ------------------------------------------------------------------------
+  // Mainloop callbacks
 
-    begin(timestamp, delta) {
-        this.getState().begin(timestamp, delta);
-    }
+  begin (timestamp, delta) {
+    this.getState().begin(timestamp, delta)
+  }
 
-    update(delta) {
-        this.getState().update(delta);
-    }
+  update (delta) {
+    this.getState().update(delta)
+  }
 
-    draw(interp) {
-        this.getState().draw(interp);
-    }
+  draw (interp) {
+    this.getState().draw(interp)
+  }
 
-    end(fps, panic) {
-        this.getState().end(fps, panic);
-    }
+  end (fps, panic) {
+    this.getState().end(fps, panic)
+  }
 
-    // ------------------------------------------------------------------------
-    // Config
+  // ------------------------------------------------------------------------
+  // Config
 
     #config;
 
-    setConfig(config) {
-        if (! (config instanceof Config)) {
-            throw "not a Config instance";
-        }
+    setConfig (config) {
+      if (!(config instanceof Config)) {
+        throw new Error('not a Config instance')
+      }
 
-        this.#config = config;
-        return this;
+      this.#config = config
+      return this
     }
 
-    getConfig() {
-        return this.#config;
+    getConfig () {
+      return this.#config
     }
 
     // ------------------------------------------------------------------------
@@ -69,17 +69,17 @@ export default class Game {
 
     #dispatcher;
 
-    setDispatcher(dispatcher) {
-        if (! (dispatcher instanceof Dispatcher)) {
-            throw "not a Dispatcher instance";
-        }
+    setDispatcher (dispatcher) {
+      if (!(dispatcher instanceof Dispatcher)) {
+        throw new Error('not a Dispatcher instance')
+      }
 
-        this.#dispatcher = dispatcher;
-        return this;
+      this.#dispatcher = dispatcher
+      return this
     }
 
-    getDispatcher() {
-        return this.#dispatcher;
+    getDispatcher () {
+      return this.#dispatcher
     }
 
     // ------------------------------------------------------------------------
@@ -87,17 +87,17 @@ export default class Game {
 
     #keyboard;
 
-    setKeyboard(keyboard) {
-        if (! (keyboard instanceof Keyboard)) {
-            throw "not an Keyboard instance";
-        }
+    setKeyboard (keyboard) {
+      if (!(keyboard instanceof Keyboard)) {
+        throw new Error('not an Keyboard instance')
+      }
 
-        this.#keyboard = keyboard;
-        return this;
+      this.#keyboard = keyboard
+      return this
     }
 
-    getKeyboard() {
-        return this.#keyboard;
+    getKeyboard () {
+      return this.#keyboard
     }
 
     // ------------------------------------------------------------------------
@@ -105,16 +105,16 @@ export default class Game {
 
     #state;
 
-    setState(state) {
-        if (! (state instanceof State)) {
-            throw "not a State instance";
-        }
+    setState (state) {
+      if (!(state instanceof State)) {
+        throw new Error('not a State instance')
+      }
 
-        this.#state = state;
-        return this;
+      this.#state = state
+      return this
     }
 
-    getState() {
-        return this.#state;
+    getState () {
+      return this.#state
     }
 }
