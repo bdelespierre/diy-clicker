@@ -18,31 +18,27 @@ game.load({
 
   game.stage().setState(state).run()
 
-  // if a previous backup exists, restore game
-  const backup = window.localStorage.getItem('clicker-game-backup')
+  // attempt restoring the last saved game
+  game.backups.restore()
 
-  if (backup !== undefined) {
-    game.restore(JSON.parse(backup))
-  }
-
-  // save game every 5s
+  // save game every 5s (if auto-save is enabled)
   state.interval(5000, () => {
-    const backup = game.backup()
-
-    window.localStorage.setItem(
-      'clicker-game-backup', JSON.stringify(backup)
-    )
+    if (game.settings.autoSave) {
+      game.backups.backup()
+    }
   })
 })
 
 // for debugging
 window.game = game
 
+const autoPause = false
+
 // pause the game when current tab looses focus
 window.addEventListener('blur', event => {
   document.title = 'not focused'
 
-  if (game.getState() instanceof RunningState) {
+  if (autoPause && game.getState() instanceof RunningState) {
     game.getState().pause()
 
     // stop the mainloop to avoid the "catching-up" effect
@@ -54,7 +50,7 @@ window.addEventListener('blur', event => {
 window.addEventListener('focus', event => {
   document.title = 'focused'
 
-  if (game.getState() instanceof PausedState) {
+  if (autoPause && game.getState() instanceof PausedState) {
     game.getState().resume()
 
     // resume the mainloop

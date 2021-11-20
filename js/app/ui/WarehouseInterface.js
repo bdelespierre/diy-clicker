@@ -39,7 +39,7 @@ export default class WarehouseInterface {
     // ui definition
 
     build (container) {
-      Assertion.instanceOf(container, Element)
+      Assertion.element(container)
 
       for (const [, item] of Object.entries(this.#game.inventory)) {
         container.appendChild(

@@ -1,4 +1,5 @@
 import Assertion from '../lib/Assertion.js'
+import BackupManager from './BackupManager.js'
 import Effects from './Effects.js'
 import Game from '../lib/Game.js'
 import Generator from './Generator.js'
@@ -22,6 +23,8 @@ export default class ClickerGame extends Game {
     #technologies = [];
     #warehouse;
     #layout;
+    #backupManager;
+    #settings = { autoSave: true };
 
     constructor ({
       container
@@ -31,6 +34,19 @@ export default class ClickerGame extends Game {
       Assertion.instanceOf(container, Element)
 
       this.#container = container
+      this.#backupManager = new BackupManager(this)
+    }
+
+    get settings () {
+      return this.#settings
+    }
+
+    set settings (obj) {
+      this.#settings = obj
+    }
+
+    get backups () {
+      return this.#backupManager
     }
 
     get inventory () {
@@ -188,53 +204,5 @@ export default class ClickerGame extends Game {
       for (const i in this.#technologies) {
         this.#layout.addTechnology(this.#technologies[i])
       }
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // backup & restore
-
-    backup () {
-      const data = {
-        createdAt: (new Date()).toISOString(),
-        generators: {},
-        technologies: {},
-        warehouse: {}
-      }
-
-      for (const generator of this.#generators) {
-        data.generators[generator.identity.id] = generator.backup()
-      }
-
-      for (const technology of this.#technologies) {
-        data.technologies[technology.identity.id] = technology.backup()
-      }
-
-      for (const [item, qt] of this.#warehouse.entries()) {
-        data.warehouse[item.identity.id] = qt
-      }
-
-      return data
-    }
-
-    restore (data) {
-      Assertion.object(data)
-      Assertion.object(data.generators)
-      Assertion.object(data.technologies)
-      Assertion.object(data.warehouse)
-
-      for (const id in data.generators) {
-        this.#objects[id].restore(data.generators[id])
-      }
-
-      for (const id in data.technologies) {
-        this.#objects[id].restore(data.technologies[id])
-      }
-
-      for (const id in data.warehouse) {
-        this.#warehouse.set(this.#objects[id], data.warehouse[id])
-      }
-
-      // rebuild layout
-      this.#layout.rebuild()
     }
 }

@@ -4,6 +4,7 @@ import GeneratorInterface from './GeneratorInterface.js'
 import PausedModal from './PausedModal.js'
 import TechnologyInterface from './TechnologyInterface.js'
 import Warehouse from '../Warehouse.js'
+import SettingsInterface from './SettingsInterface.js'
 import WarehouseInterface from './WarehouseInterface.js'
 import { el } from '../../lib/Html.js'
 
@@ -39,6 +40,11 @@ export default class Layout {
         game: game,
         warehouse: this.#warehouse,
         dispatcher: this.#dispatcher
+      }))
+
+      this.#interfaces.push(new SettingsInterface({
+        container: this.#ui['settings-tab'],
+        game: game
       }))
 
       this.#modals['paused-modal'] = new PausedModal(container)
@@ -143,7 +149,7 @@ export default class Layout {
             el('div', {
               class: 'nav-link d-flex flex-column',
               'data-bs-toggle': 'tab',
-              'data-bs-target': '#setting-tab'
+              'data-bs-target': '#settings-tab'
             }, [
               el('i', { class: 'bi bi-gear' }),
               el('span', 'Settings')
