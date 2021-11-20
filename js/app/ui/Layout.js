@@ -2,9 +2,10 @@ import Assertion from '../../lib/Assertion.js'
 import Dispatcher from '../../lib/Dispatcher.js'
 import GeneratorInterface from './GeneratorInterface.js'
 import PausedModal from './PausedModal.js'
+import PrestigeInterface from './PrestigeInterface.js'
+import SettingsInterface from './SettingsInterface.js'
 import TechnologyInterface from './TechnologyInterface.js'
 import Warehouse from '../Warehouse.js'
-import SettingsInterface from './SettingsInterface.js'
 import WarehouseInterface from './WarehouseInterface.js'
 import { el } from '../../lib/Html.js'
 
@@ -34,6 +35,11 @@ export default class Layout {
       this.build().forEach(el => {
         container.appendChild(el)
       })
+
+      this.#interfaces.push(new PrestigeInterface({
+        container: this.#ui['prestige-tab'],
+        prestige: game.prestige
+      }))
 
       this.#interfaces.push(new WarehouseInterface({
         container: this.#ui['warehouse-tab'],
@@ -97,6 +103,14 @@ export default class Layout {
           }),
 
           el('div', {
+            id: 'prestige-tab',
+            role: 'tabpanel',
+            class: 'tab-pane'
+          }, div => {
+            this.#ui['prestige-tab'] = div
+          }),
+
+          el('div', {
             id: 'warehouse-tab',
             role: 'tabpanel',
             class: 'tab-pane'
@@ -135,6 +149,15 @@ export default class Layout {
             }, [
               el('i', { class: 'bi bi-radioactive' }),
               el('span', 'Tech')
+            ]),
+
+            el('div', {
+              class: 'nav-link d-flex flex-column',
+              'data-bs-toggle': 'tab',
+              'data-bs-target': '#prestige-tab'
+            }, [
+              el('i', { class: 'bi bi-gem' }),
+              el('span', 'Prestige')
             ]),
 
             el('div', {

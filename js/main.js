@@ -12,7 +12,8 @@ const game = new ClickerGame({
 game.load({
   items: '/items.json',
   generators: '/generators.json',
-  technologies: '/technologies.json'
+  technologies: '/technologies.json',
+  prestige: '/prestige.json'
 }).then(game => {
   const state = new RunningState(game)
 

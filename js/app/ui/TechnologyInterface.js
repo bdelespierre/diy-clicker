@@ -127,6 +127,8 @@ export default class TechnologyInterface {
       el(this.#ui['upgrade-button'], {
         disabled: this.#ui['auto-upgrade-checkbox'].checked || !this.#technology.canUpgrade
       })
+
+      this.#ui['auto-upgrade-checkbox'].checked = this.#technology.autoUpgrade
     }
 
     // ----------------------------------------------------------------------------------------------------------------

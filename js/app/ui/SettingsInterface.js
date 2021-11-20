@@ -39,7 +39,8 @@ export default class SettingsInterface {
           el('input', {
             type: 'checkbox',
             id: 'settings-auto-save-switcher',
-            class: 'form-check-input'
+            class: 'form-check-input',
+            checked: this.#game.settings.autoSave
           }, input => {
             this.#ui.autoSaveSwitch = input
             on(input, 'change', this.onAutoSaveSwitchChange.bind(this))

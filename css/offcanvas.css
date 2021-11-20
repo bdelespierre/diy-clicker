@@ -56,7 +56,7 @@ body {
 }
 
 .nav-scroller .nav-link {
-  width: 25%;
+  width: 20%;
   padding: .5rem .75rem;
   color: var(--bs-gray-dark);
 }

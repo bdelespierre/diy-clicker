@@ -13,10 +13,10 @@ export default class Assertion {
   static #shouldTrace = true
 
   static any (obj, assertions, message) {
-    const trace = this.shouldTrace
+    const trace = this.#shouldTrace
 
     // disable tracing to avoid caught errors to be traced
-    this.shouldTrace = false
+    this.#shouldTrace = false
 
     // call all assertions and catch errors
     const errors = assertions.map(assertion => {
@@ -28,7 +28,7 @@ export default class Assertion {
     }).filter(error => error !== undefined)
 
     // revert tracing to its previous value
-    this.shouldTrace = trace
+    this.#shouldTrace = trace
 
     // if all validators have failed
     if (errors.length === assertions.length) {
@@ -89,7 +89,7 @@ export default class Assertion {
   }
 
   static throwError (obj, reason) {
-    if (this.shouldTrace) {
+    if (this.#shouldTrace) {
       console.trace()
     }
 

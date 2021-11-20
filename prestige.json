@@ -1,0 +1,8 @@
+{
+    "prestige": {
+        "requirements": [
+            ["item-energy", 1e2],
+            ["energy-generator", "levelGte", 5]
+        ]
+    }
+}

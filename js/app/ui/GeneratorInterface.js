@@ -195,12 +195,16 @@ export default class GeneratorInterface {
 
     // update buttons
     this.#ui['produce-button'].disabled = this.#generator.autoProduce ||
-          this.producing ||
-          !this.#generator.canProduce
+      this.producing ||
+      !this.#generator.canProduce
 
     this.#ui['upgrade-button'].disabled = this.#generator.autoUpgrade ||
-          this.upgrading ||
-          !this.#generator.canUpgrade
+      this.upgrading ||
+      !this.#generator.canUpgrade
+
+    // update switches
+    this.#ui['auto-produce-checkbox'].checked = this.#generator.autoProduce
+    this.#ui['auto-upgrade-checkbox'].checked = this.#generator.autoUpgrade
 
     // update speed
     el(this.#ui['speed-span'], Math.round(this.#generator.speed * 100) + '%')

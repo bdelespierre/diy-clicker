@@ -7,6 +7,7 @@ import Identity from './Identity.js'
 import Item from './Item.js'
 import ItemBag from './ItemBag.js'
 import Layout from './ui/Layout.js'
+import Prestige from './Prestige.js'
 import Requirements from './Requirements.js'
 import Technology from './Technology.js'
 import Warehouse from './Warehouse.js'
@@ -24,6 +25,7 @@ export default class ClickerGame extends Game {
     #warehouse;
     #layout;
     #backupManager;
+    #prestige;
     #settings = { autoSave: true };
 
     constructor ({
@@ -47,6 +49,10 @@ export default class ClickerGame extends Game {
 
     get backups () {
       return this.#backupManager
+    }
+
+    get prestige () {
+      return this.#prestige
     }
 
     get inventory () {
@@ -81,16 +87,19 @@ export default class ClickerGame extends Game {
       Assertion.nonEmptyString(paths.items)
       Assertion.nonEmptyString(paths.generators)
       Assertion.nonEmptyString(paths.technologies)
+      Assertion.nonEmptyString(paths.prestige)
 
-      const [items, generators, technologies] = await Promise.all([
+      const [items, generators, technologies, prestige] = await Promise.all([
         this.#load(paths.items),
         this.#load(paths.generators),
-        this.#load(paths.technologies)
+        this.#load(paths.technologies),
+        this.#load(paths.prestige)
       ])
 
       this.#defs.items = items
       this.#defs.generators = generators
       this.#defs.technologies = technologies
+      this.#defs.prestige = prestige
 
       return this
     }
@@ -113,6 +122,7 @@ export default class ClickerGame extends Game {
       this.#stageItems(this.#defs.items)
       this.#stageGenerator(this.#defs.generators)
       this.#stageTechnologies(this.#defs.technologies)
+      this.#stagePrestige(this.#defs.prestige)
       this.#stageUi(this.#container)
 
       return this
@@ -177,6 +187,16 @@ export default class ClickerGame extends Game {
         this.#objects[technology.identity.id] = technology
         this.#technologies.push(technology)
       }
+    }
+
+    #stagePrestige (prestige) {
+      this.#prestige = new Prestige({
+        game: this,
+        requirements: new Requirements({
+          game: this,
+          requirements: prestige.prestige.requirements
+        })
+      })
     }
 
     #objToInputBag (obj) {

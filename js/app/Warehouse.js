@@ -52,4 +52,10 @@ export default class Warehouse extends Map {
 
       return this
     }
+
+    reset () {
+      for (const [item] of this.entries()) {
+        this.set(item, 0)
+      }
+    }
 }

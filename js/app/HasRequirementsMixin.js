@@ -3,57 +3,76 @@ import Dispatcher from '../lib/Dispatcher.js'
 import Requirements from './Requirements.js'
 
 export default (superclass) => class extends superclass {
-    // dependencies
-    #dispatcher;
-    #requirements;
+  // dependencies
+  #dispatcher;
+  #requirements;
 
-    // attributes
-    #locked;
+  // attributes
+  #initialLocked;
+  #locked;
 
-    hasRequirementsConstructor ({
-      dispatcher,
-      requirements,
-      locked = true
-    }) {
-      Assertion.instanceOf(dispatcher, Dispatcher)
-      Assertion.instanceOf(requirements, Requirements)
-      Assertion.boolean(locked)
+  hasRequirementsConstructor ({
+    dispatcher,
+    requirements,
+    locked = true
+  }) {
+    Assertion.instanceOf(dispatcher, Dispatcher)
+    Assertion.instanceOf(requirements, Requirements)
+    Assertion.boolean(locked)
 
-      this.#dispatcher = dispatcher
-      this.#requirements = requirements
-      this.#locked = locked
+    this.#dispatcher = dispatcher
+    this.#requirements = requirements
+    this.#initialLocked = locked
+    this.#locked = locked
+  }
+
+  get locked () {
+    return this.#locked
+  }
+
+  get unlocked () {
+    return !this.#locked
+  }
+
+  get requirements () {
+    return this.#requirements
+  }
+
+  lock () {
+    this.#locked = true
+
+    return this
+  }
+
+  unlock () {
+    if (this.#locked && this.#requirements.fulfilled) {
+      this.#locked = false
+      this.#dispatcher.emit('unlocked', this)
     }
 
-    get locked () {
-      return this.#locked
+    return this
+  }
+
+  // ----------------------------------------------------------------------------------------------------------------
+  // backup & restore
+
+  backupHasRequirementsMixin () {
+    return {
+      locked: this.#locked
     }
+  }
 
-    get unlocked () {
-      return !this.#locked
-    }
+  restoreHasRequirementsMixin (data) {
+    Assertion.object(data)
+    Assertion.boolean(data.locked)
 
-    unlock () {
-      if (this.#locked && this.#requirements.fulfilled) {
-        this.#locked = false
-        this.#dispatcher.emit('unlocked', this)
-      }
+    this.#locked = data.locked
+  }
 
-      return this
-    }
+  // ----------------------------------------------------------------------------------------------------------------
+  // prestige
 
-    // ----------------------------------------------------------------------------------------------------------------
-    // backup & restore
-
-    backupHasRequirementsMixin () {
-      return {
-        locked: this.#locked
-      }
-    }
-
-    restoreHasRequirementsMixin (data) {
-      Assertion.object(data)
-      Assertion.boolean(data.locked)
-
-      this.#locked = data.locked
-    }
+  resetHasRequirements (prestige) {
+    this.#locked = this.#initialLocked
+  }
 }

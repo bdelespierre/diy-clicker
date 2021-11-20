@@ -5,6 +5,8 @@ export default class RunningState extends State {
   update (delta) {
     super.update(delta)
 
+    this.game.prestige.update(delta)
+
     this.game.generators.forEach(generator => {
       generator.update(delta)
     })

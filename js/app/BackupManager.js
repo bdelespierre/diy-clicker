@@ -19,6 +19,7 @@ export default class BackupManager {
     const data = {
       createdAt: (new Date()).toISOString(),
       settings: this.#game.settings,
+      prestige: this.#game.prestige.backup(),
       generators: {},
       technologies: {},
       warehouse: {}
@@ -57,12 +58,14 @@ export default class BackupManager {
 
     Assertion.object(data, 'invalid save: unable to parse save data')
     Assertion.object(data.settings, 'invalid save: no settings found')
+    Assertion.object(data.prestige, 'invalid save: no prestige found')
     Assertion.object(data.generators, 'invalid save: no generators found')
     Assertion.object(data.technologies, 'invalid save: no technologies found')
     Assertion.object(data.warehouse, 'invalid save: no warehouse found')
 
     this.#lastSave = data
     this.#game.settings = data.settings
+    this.#game.prestige.restore(data.prestige)
 
     for (const id in data.generators) {
       this.#game.get(id).restore(data.generators[id])

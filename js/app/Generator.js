@@ -5,92 +5,101 @@ import ProducingMixin from './ProducingMixin.js'
 import UpgradeableMixin from './UpgradeableMixin.js'
 
 export default class Generator extends HasRequirementsMixin(UpgradeableMixin(ProducingMixin(Object))) {
-    // dependencies
-    #identity;
+  // dependencies
+  #identity;
 
-    // attributes
-    #speed = 1;
+  // attributes
+  #speed = 1;
 
-    constructor ({
-      identity,
+  constructor ({
+    identity,
+    warehouse,
+    dispatcher,
+    requirements,
+    input,
+    output,
+    upgrade,
+    parameters
+  }) {
+    super()
+
+    this.producingConstructor({
       warehouse,
-      dispatcher,
-      requirements,
       input,
       output,
+      parameters
+    })
+
+    this.upgradeableConstructor({
+      warehouse,
       upgrade,
       parameters
-    }) {
-      super()
+    })
 
-      this.producingConstructor({
-        warehouse,
-        input,
-        output,
-        parameters
-      })
+    this.hasRequirementsConstructor({
+      dispatcher,
+      requirements
+    })
 
-      this.upgradeableConstructor({
-        warehouse,
-        upgrade,
-        parameters
-      })
+    Assertion.instanceOf(identity, Identity)
 
-      this.hasRequirementsConstructor({
-        dispatcher,
-        requirements
-      })
+    this.#identity = identity
+  }
 
-      Assertion.instanceOf(identity, Identity)
+  get identity () {
+    return this.#identity
+  }
 
-      this.#identity = identity
+  get speed () {
+    return this.#speed
+  }
+
+  set speed (value) {
+    Assertion.positiveNumber(value)
+
+    this.#speed = value
+  }
+
+  // ----------------------------------------------------------------------------------------------------------------
+  // mainloop hooks
+
+  update (delta) {
+    this.unlock()
+    this.updateProducing(delta)
+    this.updateUpgradeable(delta)
+  }
+
+  // ----------------------------------------------------------------------------------------------------------------
+  // backup & restore
+
+  backup () {
+    return {
+      speed: this.#speed,
+      requirements: this.backupHasRequirementsMixin(),
+      production: this.backupProducingMixin(),
+      upgrade: this.backupUpgradeableMixin()
     }
+  }
 
-    get identity () {
-      return this.#identity
-    }
+  restore (data) {
+    Assertion.object(data)
+    Assertion.positiveNumber(data.speed)
+    Assertion.object(data.requirements)
+    Assertion.object(data.production)
+    Assertion.object(data.upgrade)
 
-    get speed () {
-      return this.#speed
-    }
+    this.#speed = data.speed
+    this.restoreHasRequirementsMixin(data.requirements)
+    this.restoreProducingMixin(data.production)
+    this.restoreUpgradeableMixin(data.upgrade)
+  }
 
-    set speed (value) {
-      Assertion.positiveNumber(value)
+  // ----------------------------------------------------------------------------------------------------------------
+  // prestige
 
-      this.#speed = value
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // mainloop hooks
-
-    update (delta) {
-      this.unlock()
-      this.updateProducing(delta)
-      this.updateUpgradeable(delta)
-    }
-
-    // ----------------------------------------------------------------------------------------------------------------
-    // backup & restore
-
-    backup () {
-      return {
-        speed: this.#speed,
-        requirements: this.backupHasRequirementsMixin(),
-        production: this.backupProducingMixin(),
-        upgrade: this.backupUpgradeableMixin()
-      }
-    }
-
-    restore (data) {
-      Assertion.object(data)
-      Assertion.positiveNumber(data.speed)
-      Assertion.object(data.requirements)
-      Assertion.object(data.production)
-      Assertion.object(data.upgrade)
-
-      this.#speed = data.speed
-      this.restoreHasRequirementsMixin(data.requirements)
-      this.restoreProducingMixin(data.production)
-      this.restoreUpgradeableMixin(data.upgrade)
-    }
+  reset (prestige) {
+    this.resetProducing(prestige)
+    this.resetUpgrading(prestige)
+    this.resetHasRequirements(prestige)
+  }
 }
