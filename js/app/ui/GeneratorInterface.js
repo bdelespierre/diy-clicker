@@ -81,12 +81,14 @@ export default class GeneratorInterface {
       this.#ui.parameters = el('div', { class: 'd-none list-group list-group-flush' }, [
         items(this.#generator.consumption, {
           label: 'Consumption',
+          class: 'bg-transparent',
           addCounter: (el, id) => { this.#ui[`consumption-${id}`] = el },
           addMeter: (el, id) => { this.#ui[`meter-consumption-${id}`] = el }
         }),
 
         items(this.#generator.production, {
           label: 'Production',
+          class: 'bg-transparent',
           meter: false,
           addCounter: (el, id) => { this.#ui[`production-${id}`] = el },
           addMeter: (el, id) => { this.#ui[`meter-production-${id}`] = el }
@@ -94,11 +96,12 @@ export default class GeneratorInterface {
 
         items(this.#generator.upgradeCosts, {
           label: 'Upgrade Costs',
+          class: 'bg-transparent',
           addCounter: (el, id) => { this.#ui[`upgrade-costs-${id}`] = el },
           addMeter: (el, id) => { this.#ui[`meter-upgrade-costs-${id}`] = el }
         }),
 
-        el('div', { class: 'px-0 list-group-item' }, [
+        el('div', { class: 'px-0 list-group-item bg-transparent' }, [
           el('div', { class: 'd-flex' }, [
             el('div', { class: 'flex-grow-1' }, 'Speed'),
 

@@ -44,12 +44,13 @@ export function items (items, attr) {
   Assertion.any(attr.meter, [Assertion.undefined, Assertion.boolean])
   Assertion.any(attr.addCounter, [Assertion.undefined, Assertion.function])
   Assertion.any(attr.addMeter, [Assertion.undefined, Assertion.function])
+  Assertion.any(attr.class, [Assertion.undefined, Assertion.string])
 
   if (!items.length) {
     return undefined
   }
 
-  return el('details', { class: 'px-0 list-group-item' }, [
+  return el('details', ({ class: 'px-0 list-group-item ' + attr.class }), [
     el('summary', attr.label),
 
     items.map(obj => el('div', [
