@@ -1,7 +1,7 @@
 {
     "energy-generator": {
         "id": "energy-generator",
-        "label": "Cosmic Engine",
+        "label": "Nuclear Machine",
         "description": "Provdes energy to your universe",
         "requirements": [],
         "input": {},
