@@ -6,8 +6,8 @@
         "requirements": [],
         "input": {},
         "output": {
-            "item-entropy": 2,
-            "item-energy": 2
+            "item-entropy": 1,
+            "item-energy": 1
         },
         "upgrade": {
             "item-energy": 1
