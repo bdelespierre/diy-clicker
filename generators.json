@@ -1,8 +1,8 @@
 {
-    "energy-generator": {
-        "id": "energy-generator",
+    "Power-generator": {
+        "id": "Power-generator",
         "label": "Nuclear Machine",
-        "description": "Provdes energy to your universe",
+        "description": "Provides enough energy to enlighten your universe",
         "requirements": [],
         "input": {},
         "output": {
@@ -20,7 +20,7 @@
     },
     "hydrogen-generator": {
         "id": "hydrogen-generator",
-        "label": "Hydrogen Generator",
+        "label": "Hydrogen Emulator",
         "description": "Creates hydrogen out of pure energy, a miracle of science!",
         "requirements": [
             ["item-energy", 1e2],
