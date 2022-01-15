@@ -1,7 +1,7 @@
 {
     "Power-generator": {
         "id": "Power-generator",
-        "label": "Nuclear Station", #FFFFFF
+        "label": "Nuclear Station", 
         "description": "Provides enough energy to enlighten your universe",
         "requirements": [],
         "input": {},
